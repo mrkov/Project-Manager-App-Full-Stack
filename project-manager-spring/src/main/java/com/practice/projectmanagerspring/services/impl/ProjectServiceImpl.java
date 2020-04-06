@@ -45,4 +45,10 @@ public class ProjectServiceImpl implements ProjectService{
 		return null;
 	}
 
+	@Override
+	public Optional<Project> findByProjectIdentifier(String projectIdentifier) {
+		// TODO Auto-generated method stub
+		return projectRepository.findByProjectIdentifier(projectIdentifier.toUpperCase());
+	}
+
 }

@@ -11,6 +11,7 @@ public interface ProjectService {
 	public void delete(Long id);
 	public List<Project> findAll();
 	public Optional<Project> findOne(Long id);
+	public Optional<Project> findByProjectIdentifier(String projectIdentifier);
 	
 
 }
