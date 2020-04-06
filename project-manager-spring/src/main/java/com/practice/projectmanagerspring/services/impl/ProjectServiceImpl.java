@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.practice.projectmanagerspring.exceptions.ProjectIdException;
 import com.practice.projectmanagerspring.model.Project;
 import com.practice.projectmanagerspring.repositories.ProjectRepository;
 import com.practice.projectmanagerspring.services.ProjectService;
@@ -17,9 +18,13 @@ public class ProjectServiceImpl implements ProjectService{
 	private ProjectRepository projectRepository;
 	
 	@Override
-	public Project save(Project project) {
-		
-		return projectRepository.save(project);
+	public Project save(Project project) {		
+		try {
+			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			return projectRepository.save(project);
+		} catch (Exception e) {
+			throw new ProjectIdException("Project ID " + project.getProjectIdentifier().toUpperCase() + " already exists.");
+		}		
 	}
 
 	@Override
