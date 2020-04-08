@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.practice.projectmanagerspring.exceptions.ProjectIdException;
@@ -23,13 +25,23 @@ public class ProjectServiceImpl implements ProjectService{
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 			return projectRepository.save(project);
 		} catch (Exception e) {
-			throw new ProjectIdException("Project ID " + project.getProjectIdentifier().toUpperCase() + " already exists.");
+			if(project.getProjectIdentifier() != null)
+				throw new ProjectIdException("There is already a project with id: " + project.getProjectIdentifier().toUpperCase());
+			else {
+				throw new ProjectIdException("Project identifier must not be null!!!");
+			}
 		}		
 	}
 
 	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
+	public void delete(String projectIdentifier) {
+		Optional<Project> found = projectRepository.findByProjectIdentifier(projectIdentifier.toUpperCase());
+		
+		if(!found.isPresent()) {
+			throw new ProjectIdException("Can't delete project. There is no project with id: " + projectIdentifier.toUpperCase());
+		}
+		
+		projectRepository.delete(found.get());
 		
 	}
 
@@ -49,6 +61,11 @@ public class ProjectServiceImpl implements ProjectService{
 	public Optional<Project> findByProjectIdentifier(String projectIdentifier) {
 		// TODO Auto-generated method stub
 		return projectRepository.findByProjectIdentifier(projectIdentifier.toUpperCase());
+	}
+
+	@Override
+	public Page<Project> findAllPage(int pageNum) {
+		return projectRepository.findAll(PageRequest.of(pageNum, 4));
 	}
 
 }
