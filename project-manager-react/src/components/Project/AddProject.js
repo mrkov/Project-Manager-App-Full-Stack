@@ -17,7 +17,7 @@ export default class AddProject extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const newProject = {... this.state};
+        const newProject = {...this.state};
         console.log(newProject)
     }
 
