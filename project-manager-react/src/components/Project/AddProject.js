@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { createProject } from '../../actions/projectActions'
 
-export default class AddProject extends Component {
-    constructor(props) {
-        super(props)
+class AddProject extends Component {
+    constructor() {
+        super();
     
         this.state = {
             projectName: '',
@@ -18,7 +21,7 @@ export default class AddProject extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const newProject = {...this.state};
-        console.log(newProject)
+        this.props.createProject(newProject, this.props.history)
     }
 
     handleChange(event) {
@@ -99,3 +102,12 @@ export default class AddProject extends Component {
         )
     }
 }
+
+AddProject.propTypes = {
+    CreateProject: PropTypes.func.isRequired
+}
+
+export default connect(
+    null,
+    { createProject}
+) (AddProject)
