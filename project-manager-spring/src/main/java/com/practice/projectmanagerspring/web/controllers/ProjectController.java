@@ -29,7 +29,7 @@ import com.practice.projectmanagerspring.services.impl.MapValidationService;
 
 @RestController
 @RequestMapping("/api/projects")
-@CrossOrigin()
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProjectController {
 
 	@Autowired
