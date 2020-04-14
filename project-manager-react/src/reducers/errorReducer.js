@@ -1,5 +1,5 @@
 import {GET_ERRORS} from '../actions/types'
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 
 const initialState = {};
 

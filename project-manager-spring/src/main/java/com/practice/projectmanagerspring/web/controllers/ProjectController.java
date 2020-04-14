@@ -82,8 +82,8 @@ public class ProjectController {
 	}
 
 	@PutMapping(value = "/{identifier}")
-	public ResponseEntity<?> updateProject(@PathVariable String identifier,@Valid @RequestBody Project project) {
-		System.out.println("HAHAHAHAHAHAHAHAHAH");
+	public ResponseEntity<?> updateProject(@PathVariable String identifier,@Valid @RequestBody Project project, BindingResult result) {
+
 		Optional<Project> found = projectService.findByProjectIdentifier(identifier);
 		
 		if (!found.isPresent()) {
@@ -93,7 +93,13 @@ public class ProjectController {
 		if(project.getProjectIdentifier() == null || !found.get().getProjectIdentifier().equalsIgnoreCase(project.getProjectIdentifier())) {
 			return new ResponseEntity<String>("It's not possible to change project identifier",HttpStatus.BAD_REQUEST);
 		}
-		System.out.println("HIHIHIHIHIH");
+		
+		ResponseEntity<?> errorMap = mapValidationService.isThereBadFieldValidation(result);
+		if (errorMap != null)
+			return errorMap;
+		
+		
+	
 		Project updated = projectService.save(project);
 		
 		return new ResponseEntity<Project>(updated, HttpStatus.OK);

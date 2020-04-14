@@ -76,7 +76,7 @@ class UpdateProject extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <h5 className="display-4 text-center">Create / Edit Project form</h5>
+                            <h5 className="display-4 text-center">Edit Project form</h5>
                             <hr />
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-group">
@@ -104,7 +104,8 @@ class UpdateProject extends Component {
                                 </div>
                                 <div className="form-group">
                                     <textarea
-                                        className="form-control form-control-lg"
+                                        className={classnames("form-control form-control-lg",
+                                            { "is-invalid": errors.description })}
                                         placeholder="Project Description"
                                         name='description'
                                         value={this.state.description}
