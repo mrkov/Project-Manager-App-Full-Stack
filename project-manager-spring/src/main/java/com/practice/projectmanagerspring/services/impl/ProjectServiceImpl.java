@@ -9,37 +9,47 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.practice.projectmanagerspring.exceptions.ProjectIdException;
+import com.practice.projectmanagerspring.model.Backlog;
 import com.practice.projectmanagerspring.model.Project;
 import com.practice.projectmanagerspring.repositories.ProjectRepository;
 import com.practice.projectmanagerspring.services.ProjectService;
 
 @Service
-public class ProjectServiceImpl implements ProjectService{
-	
+public class ProjectServiceImpl implements ProjectService {
+
 	@Autowired
 	private ProjectRepository projectRepository;
-	
+
 	@Override
-	public Project save(Project project) {		
+	public Project save(Project project) {
 		try {
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			if (project.getId() == null) {
+				Backlog backlog = new Backlog();
+				backlog.setProject(project);
+				backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+
+			}
+
 			return projectRepository.save(project);
 		} catch (Exception e) {
-				throw new ProjectIdException("There is already a project with id: " + project.getProjectIdentifier().toUpperCase());
+			throw new ProjectIdException(
+					"There is already a project with id: " + project.getProjectIdentifier().toUpperCase());
 
-		}		
+		}
 	}
 
 	@Override
 	public void delete(String projectIdentifier) {
 		Optional<Project> found = projectRepository.findByProjectIdentifier(projectIdentifier.toUpperCase());
-		
-		if(!found.isPresent()) {
-			throw new ProjectIdException("Can't delete project. There is no project with id: " + projectIdentifier.toUpperCase());
+
+		if (!found.isPresent()) {
+			throw new ProjectIdException(
+					"Can't delete project. There is no project with id: " + projectIdentifier.toUpperCase());
 		}
-		
+
 		projectRepository.delete(found.get());
-		
+
 	}
 
 	@Override

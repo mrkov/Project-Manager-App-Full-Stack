@@ -36,15 +36,20 @@ public class Project {
 	private Date endDate;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "project")
 	private Backlog backlog;
-	
+
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(updatable = false)
 	private Date createdAt;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date updatedAt;
 
-	public Project() {
 
+	public Backlog getBacklog() {
+		return backlog;
+	}
+
+	public void setBacklog(Backlog backlog) {
+		this.backlog = backlog;
 	}
 
 	public Long getId() {

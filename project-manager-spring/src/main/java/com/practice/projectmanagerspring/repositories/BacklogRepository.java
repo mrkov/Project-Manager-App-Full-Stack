@@ -7,5 +7,8 @@ import com.practice.projectmanagerspring.model.Backlog;
 
 @Repository
 public interface BacklogRepository extends JpaRepository<Backlog, Long> {
+	
+	Backlog findByProjectIdentifier(String projectIdentifier);
+	
 
 }

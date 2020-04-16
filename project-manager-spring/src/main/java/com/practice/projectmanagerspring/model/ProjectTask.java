@@ -2,14 +2,19 @@ package com.practice.projectmanagerspring.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ProjectTask {
@@ -27,6 +32,10 @@ public class ProjectTask {
 	private Date dueDate;
 	@Column(updatable = false)
 	private String projectIdentifier;
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@JsonIgnore
+	@JoinColumn(updatable = false, nullable = false)
+	private Backlog backlog;
 
 	private Date createAt;
 	private Date updateAt;

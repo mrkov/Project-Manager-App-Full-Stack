@@ -37,6 +37,7 @@ public class ProjectController {
 
 	@Autowired
 	private MapValidationService mapValidationService;
+	
 
 	@PostMapping
 	public ResponseEntity<?> createProject(@Valid @RequestBody Project project, BindingResult result) {
@@ -98,7 +99,10 @@ public class ProjectController {
 		if (errorMap != null)
 			return errorMap;
 		
+		//postavljanje backlog-a, kako ga ne bi stavio na null,
+		//pa da bi se to sprečilo, svaki put mora da se šalje backlog sa frontenda
 		
+		project.setBacklog(found.get().getBacklog());
 	
 		Project updated = projectService.save(project);
 		
