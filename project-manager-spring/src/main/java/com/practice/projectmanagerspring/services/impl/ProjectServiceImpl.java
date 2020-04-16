@@ -23,7 +23,6 @@ public class ProjectServiceImpl implements ProjectService{
 	public Project save(Project project) {		
 		try {
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
-			System.out.println("project service impl - usao u save");
 			return projectRepository.save(project);
 		} catch (Exception e) {
 				throw new ProjectIdException("There is already a project with id: " + project.getProjectIdentifier().toUpperCase());

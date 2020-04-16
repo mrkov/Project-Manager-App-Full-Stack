@@ -2,11 +2,13 @@ package com.practice.projectmanagerspring.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotBlank;
@@ -32,6 +34,8 @@ public class Project {
 	private Date startDate;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "project")
+	private Backlog backlog;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(updatable = false)
