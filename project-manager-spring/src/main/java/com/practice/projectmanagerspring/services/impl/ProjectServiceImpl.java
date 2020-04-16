@@ -28,6 +28,7 @@ public class ProjectServiceImpl implements ProjectService {
 				Backlog backlog = new Backlog();
 				backlog.setProject(project);
 				backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+				project.setBacklog(backlog);
 
 			}
 

@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +30,8 @@ public class ProjectTask {
 	private String summary;
 	private String acceptanceCriteria;
 	private String status;
+	@Min(value = 1)
+	@Max(value = 3)
 	private Integer priority;
 	private Date dueDate;
 	@Column(updatable = false)
@@ -39,6 +43,14 @@ public class ProjectTask {
 
 	private Date createAt;
 	private Date updateAt;
+
+	public Backlog getBacklog() {
+		return backlog;
+	}
+
+	public void setBacklog(Backlog backlog) {
+		this.backlog = backlog;
+	}
 
 	public Long getId() {
 		return id;
